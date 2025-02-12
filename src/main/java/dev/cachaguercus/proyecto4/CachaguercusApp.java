@@ -1,16 +1,12 @@
 package dev.cachaguercus.proyecto4;
 
-import dev.cachaguercus.proyecto4.controllers.GhostBusterController;
-import dev.cachaguercus.proyecto4.models.GhostBusterModel;
-import dev.cachaguercus.proyecto4.views.GhostBusterView;
+import javax.swing.*;
+
+import dev.cachaguercus.proyecto4.views.GBMainFrame;
 
 public class CachaguercusApp {
-
-    public static void main(String[] args) {
-        GhostBusterModel model = new GhostBusterModel();
-        GhostBusterView view = new GhostBusterView();
-        GhostBusterController controller = new GhostBusterController(model, view);
-
-        controller.run();
+public static void main(String[] args) {
+    GBMainFrame gbMainFrame = new GBMainFrame();
+    gbMainFrame.initComponents();
     }
 }
