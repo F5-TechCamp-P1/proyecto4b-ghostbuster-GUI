@@ -1,7 +1,5 @@
 package dev.cachaguercus.proyecto4.views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Font;
 
 import javax.swing.BoxLayout;
@@ -11,15 +9,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GBMainFrame extends JFrame {
+import dev.cachaguercus.proyecto4.controllers.GhostBusterController;
 
-    public GBMainFrame() {
+public class GBMainFrame extends JFrame {
+    private GhostBusterController ghostBusterController;
+
+    public GBMainFrame(GhostBusterController controller) {
+        this.ghostBusterController = controller;
+        initComponents();
+    }
+
+    private void initComponents() {
         JLabel title = new JLabel("GhostBusters Asturias");
         title.setFont(new Font("Showcard Gothic", Font.BOLD, 24));
         title.setAlignmentX(CENTER_ALIGNMENT);
 
         String name = "";
-        JLabel welcomeMessage = new JLabel("¡Bienvenid@ " + name + " a la Base Ghostbusters Asturias! Gestiona tus fantasmas atrapados y protege la región.");
+        JLabel welcomeMessage = new JLabel("¡Bienvenid@ " + name
+                + " a la Base Ghostbusters Asturias! Gestiona tus fantasmas atrapados y protege la región.");
         welcomeMessage.setAlignmentX(CENTER_ALIGNMENT);
 
         JLabel nameRequest = new JLabel("Ingresa tu nombre: ");
@@ -44,15 +51,14 @@ public class GBMainFrame extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        playBtn.addActionListener(e -> openGame());
+        playBtn.addActionListener(e -> openGame(nameField));
+    }
 
-            public void openGame() {
-                String name = namefield.getText();
-                GhostBusterController controller = new GhostBusterController();
-                controller.saveGBModelName(name);
-                controller.selectOptionMainMenu();
-                dispose();
-        }
+    public void openGame(JTextField nameField) {
+        String name = nameField.getText();
+        ghostBusterController.saveGBModelName(name);
+        ghostBusterController.selectOptionMainMenu();
+        dispose();
     }
 
 }
