@@ -7,24 +7,26 @@ import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
 import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
-import dev.cachaguercus.proyecto4.views.GhostBusterView;
+import dev.cachaguercus.proyecto4.views.GBMainFrame;
 
 public class GhostBusterController {
     private GhostBusterModel model;
-    private GhostBusterView view;
-    private static Scanner scanner = new Scanner(System.in);
     private int lastGhostId = 0;
 
-    public GhostBusterController(GhostBusterModel model, GhostBusterView view) {
+    public GhostBusterController(GhostBusterModel model) {
         this.model = model;
-        this.view = view;
     }
 
     public void run() {
-        view.displayWelcomeMessage();
-        String ghostBustername = scanner.nextLine();
+        GBMainFrame gbMainFrame = new GBMainFrame();
+        gbMainFrame.setVisible(true);
+        gbMainFrame.setLocationRelativeTo(null);
+        
+    }
+
+    public void saveGBModelName(String name){
+        String ghostBustername = name;
         model.setName(ghostBustername);
-        selectOptionMainMenu();
     }
 
     public void selectOptionMainMenu() {
@@ -51,6 +53,7 @@ public class GhostBusterController {
                 break;
         }
     }
+
     public void captureGhost() {
         view.displayCaptureGhost();
         String name = scanner.nextLine();

@@ -1,51 +1,64 @@
 package dev.cachaguercus.proyecto4.views;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Font;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class GBMainFrame extends JFrame {
-    public GBMainFrame() {
-        setTitle("Cachagüercus Asturias");
-        setSize(1000, 1500);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
-        JLabel title = new JLabel("Ghost Busters Asturias");
+    
+    public GBMainFrame() {  
+        JLabel title = new JLabel("GhostBusters Asturias");
         title.setFont(new Font("Showcard Gothic", Font.BOLD, 24));
         title.setAlignmentX(CENTER_ALIGNMENT);
 
         String name = "";
-
-        JLabel messageToPlayer = new JLabel("Bienvenido " + name);
-        messageToPlayer.setAlignmentX(CENTER_ALIGNMENT);
-
-        JLabel gbNameRequest = new JLabel("Introduce tu nombre:");
-        JTextField gbNameInput = new JTextField(20);
-        gbNameInput.setMaximumSize(new Dimension(200, 25));
-        JButton button = new JButton("Comenzar juego");
-
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String name = gbNameInput.getText();
-                messageToPlayer.setText("Bienvenido " + name);
-            }
-        });
-
-        add(title);
-        add(messageToPlayer);
-        add(Box.createVerticalStrut(10));
+        JLabel welcomeMessage = new JLabel("¡Bienvenid@ " + name + " a la Base Ghostbusters Asturias! Gestiona tus fantasmas atrapados y protege la región.");  
+        welcomeMessage.setAlignmentX(CENTER_ALIGNMENT);
+        
+        JLabel nameRequest = new JLabel("Ingresa tu nombre: ");
+        JTextField nameField = new JTextField(20);
+        JButton playBtn = new JButton("Jugar");
 
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
+        inputPanel.add(nameRequest);
+        inputPanel.add(nameField);
+        inputPanel.add(playBtn);
         inputPanel.setAlignmentX(CENTER_ALIGNMENT);
-        inputPanel.add(gbNameRequest);
-        inputPanel.add(gbNameInput);
-        inputPanel.add(button);
+        
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS)); // Cambiar a BoxLayout
+        container.add(title);
+        container.add(welcomeMessage);
+        container.add(inputPanel);
+        
+        setContentPane(container);
+        setTitle("GhostBusters Asturias");
+        setSize(800, 400); 
+        setVisible(true); 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Asegúrate de cerrar la ventana correctamente
 
-        add(inputPanel);
+        //playBtn.addActionListener(e -> openGame());
 
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            //public void openGame() {
+                //String name = namefield.getText();
+                //GhostBusterController controller = new GhostBusterController();
+                //controller.saveGBModelName(name);
+                
+                //welcomeMessage.setText("¡Bienvenid@ " + name + " a la Base Ghostbusters Asturias! Gestiona tus fantasmas atrapados y protege la región.");
+                
+                //ButtonsFrame buttonsFrame = new ButtonsFrame();
+                //buttonsFrame.setLocationRelativeTo(null);
+                //buttonsFrame.setVisible(true);
+                
+                //dispose();
+        //}
     }
+
 }
