@@ -1,5 +1,6 @@
 package dev.cachaguercus.proyecto4.controllers;
 
+import java.util.List;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
@@ -9,6 +10,7 @@ import dev.cachaguercus.proyecto4.models.GhostModel;
 import dev.cachaguercus.proyecto4.views.ButtonsFrame;
 import dev.cachaguercus.proyecto4.views.CaptureFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
+import dev.cachaguercus.proyecto4.views.ListFrame;
 
 public class GhostBusterController {
     private GhostBusterModel model;
@@ -78,6 +80,15 @@ public class GhostBusterController {
     public void addGhost(String name, enumGhostType ghostType, enumDangerLevel dangerLevel, String specialSkill) {
         GhostModel ghost = new GhostModel(lastGhostId, specialSkill, ghostType, dangerLevel, specialSkill, null);
         GhostBusterModel.captureGhost(ghost);
+
+    }
+
+    public List<GhostModel> getList(){
+        return GhostBusterModel.getGhostTrap();
+    }
+
+    public void deleteGhost(int ghostId) {
+        GhostBusterModel.removeGhost(GhostBusterModel.getGhostTrap().get(ghostId));
 
     }
 }
