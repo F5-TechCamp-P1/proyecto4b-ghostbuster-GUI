@@ -7,6 +7,7 @@ public class GhostBusterModel {
     private static List<GhostModel> ghostTrap = new ArrayList<GhostModel>();
     private String name;
 
+
     public GhostBusterModel() {
     }
 
