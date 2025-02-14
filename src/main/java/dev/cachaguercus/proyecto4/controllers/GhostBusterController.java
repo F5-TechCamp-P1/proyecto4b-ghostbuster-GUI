@@ -30,31 +30,12 @@ public class GhostBusterController {
     }
 
     public void selectOptionMainMenu() {
-        view.displayInitialMenu();
-        String option = scanner.nextLine();
-        switch (option) {
-            case "1":
-                captureGhost();
-                selectOptionMainMenu();
-                break;
-            case "2":
-                listGhosts();
-                selectOptionMainMenu();
-                break;
-            case "3":
-                removeGhost();
-                selectOptionMainMenu();
-                break;
-            case "4":
-                exitGame();
-                break;
-            default:
-                selectOptionMainMenu();
-                break;
-        }
-    }
+        ButtonsFrame buttonsFrame = new ButtonsFrame();
+        buttonsFrame.setVisible(true);
+        buttonsFrame.setLocationRelativeTo(null);
+     }
 
-    public void captureGhost() {
+   public void captureGhost() {
         view.displayCaptureGhost();
         String name = scanner.nextLine();
 
