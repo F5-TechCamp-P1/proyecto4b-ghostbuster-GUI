@@ -1,13 +1,13 @@
 package dev.cachaguercus.proyecto4.controllers;
 
 import java.time.LocalDate;
-import java.util.Scanner;
-
+import javax.swing.JOptionPane;
 import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
 import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
 import dev.cachaguercus.proyecto4.views.ButtonsFrame;
+import dev.cachaguercus.proyecto4.views.CaptureFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
 
 public class GhostBusterController {
@@ -50,15 +50,16 @@ public class GhostBusterController {
     }
 
     public void removeGhost() {
-        view.displayReleaseGhost();
-        String name = scanner.nextLine();
-
-        for (GhostModel ghost : GhostBusterModel.getGhostTrap()) {
-            if (ghost.getName().equals(name)) {
-                GhostBusterModel.removeGhost(ghost);
-                view.displaySuccessfulRelease();
-                return;
+        String name = JOptionPane.showInputDialog(null, "Ingrese el nombre del fantasma a liberar:");
+        if (name != null) {
+            for (GhostModel ghost : GhostBusterModel.getGhostTrap()) {
+                if (ghost.getName().equalsIgnoreCase(name)) {
+                    GhostBusterModel.removeGhost(ghost);
+                    JOptionPane.showMessageDialog(null, "Fantasma liberado!", "Liberación", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
             }
+            JOptionPane.showMessageDialog(null, "Fantasma no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -73,4 +74,11 @@ public class GhostBusterController {
         exitFrame.setVisible(true);
         exitFrame.setLocationRelativeTo(null);
     }
+
+    public void addGhost(String name, enumGhostType ghostType, enumDangerLevel dangerLevel, String specialSkill) {
+        GhostModel ghost = new GhostModel(lastGhostId, specialSkill, ghostType, dangerLevel, specialSkill, null);
+        GhostBusterModel.captureGhost(ghost);
+
+    }
 }
+
