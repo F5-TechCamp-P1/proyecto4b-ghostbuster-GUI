@@ -24,9 +24,9 @@ public class CaptureFrame extends JFrame {
         JComboBox<enumGhostType> ghostTypeComboBox = new JComboBox<>(enumGhostType.values());
         JComboBox<enumDangerLevel> dangerLevelComboBox = new JComboBox<>(enumDangerLevel.values());
         JTextField specialSkillField = new JTextField();
-        JButton captureButton = new JButton("Capturar");
+        JButton addButton = new JButton("Capturar");
 
-        captureButton.addActionListener(e -> {
+        addButton.addActionListener(e -> {
             String name = nameField.getText();
             enumGhostType ghostType = (enumGhostType) ghostTypeComboBox.getSelectedItem();
             enumDangerLevel dangerLevel = (enumDangerLevel) dangerLevelComboBox.getSelectedItem();
@@ -47,7 +47,7 @@ public class CaptureFrame extends JFrame {
         add(dangerLevelComboBox);
         add(new JLabel("Habilidad Especial:"));
         add(specialSkillField);
-        add(captureButton);
+        add(addButton);
 
         setVisible(true);
     }

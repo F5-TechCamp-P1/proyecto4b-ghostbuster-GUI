@@ -7,6 +7,7 @@ import dev.cachaguercus.proyecto4.enums.enumGhostType;
 import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
 import dev.cachaguercus.proyecto4.views.ButtonsFrame;
+import dev.cachaguercus.proyecto4.views.CaptureFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
 
 public class GhostBusterController {
@@ -72,6 +73,12 @@ public class GhostBusterController {
         ExitFrame exitFrame = new ExitFrame(this);
         exitFrame.setVisible(true);
         exitFrame.setLocationRelativeTo(null);
+    }
+
+    public void addGhost(String name, enumGhostType ghostType, enumDangerLevel dangerLevel, String specialSkill) {
+        GhostModel ghost = new GhostModel(lastGhostId, specialSkill, ghostType, dangerLevel, specialSkill, null);
+        GhostBusterModel.captureGhost(ghost);
+
     }
 }
 
