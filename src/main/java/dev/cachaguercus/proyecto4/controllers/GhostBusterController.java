@@ -7,6 +7,7 @@ import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
 import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
+import dev.cachaguercus.proyecto4.views.ButtonsFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
 
 public class GhostBusterController {
@@ -18,44 +19,34 @@ public class GhostBusterController {
     }
 
     public void run() {
-        GBMainFrame gbMainFrame = new GBMainFrame();
+        GBMainFrame gbMainFrame = new GBMainFrame(this);
         gbMainFrame.setVisible(true);
         gbMainFrame.setLocationRelativeTo(null);
-        
+
     }
 
     public void saveGBModelName(String name){
-        String ghostBustername = name;
-        model.setName(ghostBustername);
+        if (model == null) {
+            model = new GhostBusterModel();
+        }
+        model.setName(name);
+
     }
 
     public void selectOptionMainMenu() {
-        ButtonsFrame buttonsFrame = new ButtonsFrame();
+        ButtonsFrame buttonsFrame = new ButtonsFrame(this);
         buttonsFrame.setVisible(true);
         buttonsFrame.setLocationRelativeTo(null);
-     }
+    }
 
-   public void captureGhost() {
-        view.displayCaptureGhost();
-        String name = scanner.nextLine();
+    public String getGBModelName() {
+        return model.getName();
+    }
 
-        view.displayGhostTypes();
-        int option = Integer.parseInt(scanner.nextLine());
-        enumGhostType ghostType = enumGhostType.values()[option - 1];
-
-        view.displayDangerLevels();
-        int option2 = Integer.parseInt(scanner.nextLine());
-        enumDangerLevel dangerLevel = enumDangerLevel.values()[option2 - 1];
-
-        view.displaySpecialSkill();
-        String specialSkill = scanner.nextLine();
-
-        LocalDate captureDate = LocalDate.now();
-
-        GhostModel ghost = new GhostModel(++lastGhostId, name, ghostType, dangerLevel, specialSkill, captureDate);
-        GhostBusterModel.captureGhost(ghost);
-
-        view.displaySuccessfulCapture(name, captureDate);
+    public void captureGhost() {
+    CaptureFrame captureFrame = new CaptureFrame(this);
+    captureFrame.setVisible(true);
+    captureFrame.setLocationRelativeTo(null);
     }
 
     public void removeGhost() {
@@ -72,10 +63,14 @@ public class GhostBusterController {
     }
 
     public void listGhosts() {
-        view.displayGhostTrap();
+        ListFrame listFrame = new ListFrame(this);
+        listFrame.setVisible(true);
+        listFrame.setLocationRelativeTo(null);
     }
 
     public void exitGame() {
-        view.displayExitMessage();
+        ExitFrame exitFrame = new ExitFrame(this);
+        exitFrame.setVisible(true);
+        exitFrame.setLocationRelativeTo(null);
     }
 }
