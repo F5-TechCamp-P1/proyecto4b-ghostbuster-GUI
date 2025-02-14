@@ -1,12 +1,10 @@
 package dev.cachaguercus.proyecto4;
 
-import javax.swing.*;
-
-import dev.cachaguercus.proyecto4.views.GBMainFrame;
+import dev.cachaguercus.proyecto4.controllers.GhostBusterController;
 
 public class CachaguercusApp {
-public static void main(String[] args) {
-    GBMainFrame gbMainFrame = new GBMainFrame();
-    gbMainFrame.initComponents();
+    public static void main(String[] args) {
+        GhostBusterController ghostBusterController = new GhostBusterController(null);
+        ghostBusterController.run();
     }
 }

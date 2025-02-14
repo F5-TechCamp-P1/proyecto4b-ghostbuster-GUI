@@ -1,57 +1,40 @@
 package dev.cachaguercus.proyecto4.controllers;
 
 import java.time.LocalDate;
-import java.util.Scanner;
-
+import javax.swing.JOptionPane;
 import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
 import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
-import dev.cachaguercus.proyecto4.views.GhostBusterView;
+import dev.cachaguercus.proyecto4.views.GBMainFrame;
 
 public class GhostBusterController {
     private GhostBusterModel model;
-    private GhostBusterView view;
-    private static Scanner scanner = new Scanner(System.in);
     private int lastGhostId = 0;
 
-    public GhostBusterController(GhostBusterModel model, GhostBusterView view) {
+    public GhostBusterController(GhostBusterModel model) {
         this.model = model;
-        this.view = view;
     }
 
     public void run() {
-        view.displayWelcomeMessage();
-        String ghostBustername = scanner.nextLine();
+        GBMainFrame gbMainFrame = new GBMainFrame();
+        gbMainFrame.setVisible(true);
+        gbMainFrame.setLocationRelativeTo(null);
+
+    }
+
+    public void saveGBModelName(String name){
+        String ghostBustername = name;
         model.setName(ghostBustername);
-        selectOptionMainMenu();
     }
 
     public void selectOptionMainMenu() {
-        view.displayInitialMenu();
-        String option = scanner.nextLine();
-        switch (option) {
-            case "1":
-                captureGhost();
-                selectOptionMainMenu();
-                break;
-            case "2":
-                listGhosts();
-                selectOptionMainMenu();
-                break;
-            case "3":
-                removeGhost();
-                selectOptionMainMenu();
-                break;
-            case "4":
-                exitGame();
-                break;
-            default:
-                selectOptionMainMenu();
-                break;
-        }
-    }
-    public void captureGhost() {
+        ButtonsFrame buttonsFrame = new ButtonsFrame();
+        buttonsFrame.setVisible(true);
+        buttonsFrame.setLocationRelativeTo(null);
+     }
+
+   public void captureGhost() {
         view.displayCaptureGhost();
         String name = scanner.nextLine();
 
@@ -74,24 +57,42 @@ public class GhostBusterController {
         view.displaySuccessfulCapture(name, captureDate);
     }
 
-    public void removeGhost() {
-        view.displayReleaseGhost();
-        String name = scanner.nextLine();
+    // Método para agregar un fantasma a la lista
+    public void addGhost(String name, enumGhostType ghostType, enumDangerLevel dangerLevel, String specialSkill) {
+        LocalDate captureDate = LocalDate.now();
+        GhostModel ghost = new GhostModel(GhostBusterModel.getGhostTrap().size() + 1, name, ghostType, dangerLevel, specialSkill, captureDate);
+        GhostBusterModel.captureGhost(ghost);
+        JOptionPane.showMessageDialog(null, "Fantasma capturado con éxito!", "Captura", JOptionPane.INFORMATION_MESSAGE);
+    }
 
+    // Método para listar los fantasmas capturados
+    public void listGhosts() {
+        StringBuilder ghostsList = new StringBuilder("Fantasmas capturados:\n");
         for (GhostModel ghost : GhostBusterModel.getGhostTrap()) {
-            if (ghost.getName().equals(name)) {
-                GhostBusterModel.removeGhost(ghost);
-                view.displaySuccessfulRelease();
-                return;
+            ghostsList.append(ghost.toString()).append("\n");
+        }
+        JOptionPane.showMessageDialog(null, ghostsList.toString(), "Lista de Fantasmas", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Método para eliminar un fantasma
+    public void removeGhost() {
+        String name = JOptionPane.showInputDialog(null, "Ingrese el nombre del fantasma a liberar:");
+        if (name != null) {
+            for (GhostModel ghost : GhostBusterModel.getGhostTrap()) {
+                if (ghost.getName().equalsIgnoreCase(name)) {
+                    GhostBusterModel.removeGhost(ghost);
+                    JOptionPane.showMessageDialog(null, "Fantasma liberado!", "Liberación", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
             }
+            JOptionPane.showMessageDialog(null, "Fantasma no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void listGhosts() {
-        view.displayGhostTrap();
-    }
-
+    // Método para salir del juego
     public void exitGame() {
-        view.displayExitMessage();
+        JOptionPane.showMessageDialog(null, "¡Gracias por jugar!", "Salir", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
     }
 }
+
