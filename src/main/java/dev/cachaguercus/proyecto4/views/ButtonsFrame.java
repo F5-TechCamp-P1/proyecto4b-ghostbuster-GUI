@@ -10,7 +10,10 @@ import javax.swing.SwingConstants;
 import dev.cachaguercus.proyecto4.controllers.GhostBusterController;
 
 public class ButtonsFrame extends JFrame {
-    public ButtonsFrame() {
+    private GhostBusterController ghostBusterController;
+
+    public ButtonsFrame(GhostBusterController controller) {
+        this.ghostBusterController = controller;
         initComponents();
     }
 
@@ -19,7 +22,6 @@ public class ButtonsFrame extends JFrame {
         JButton listButton = new JButton("Ver Fantasmas Capturados");
         JButton exitButton = new JButton("Terminar juego");
 
-        GhostBusterController ghostBusterController = new GhostBusterController(null);
         String name = ghostBusterController.getGBModelName();
 
         JLabel welcomeLabel = new JLabel(
@@ -43,19 +45,14 @@ public class ButtonsFrame extends JFrame {
     }
 
     private void captureGhost() {
-        GhostBusterController controller = new GhostBusterController(null);
-        controller.captureGhost();
-
+        ghostBusterController.captureGhost();
     }
 
     private void listGhosts() {
-        GhostBusterController controller = new GhostBusterController(null);
-        controller.listGhosts();
+        ghostBusterController.listGhosts();
     }
 
     private void exitGame() {
-        GhostBusterController controller = new GhostBusterController(null);
-        controller.exitGame();
+        ghostBusterController.exitGame();
     }
-
 }

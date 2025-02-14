@@ -12,7 +12,6 @@ import dev.cachaguercus.proyecto4.views.GBMainFrame;
 
 public class GhostBusterController {
     private GhostBusterModel model;
-
     private int lastGhostId = 0;
 
     public GhostBusterController(GhostBusterModel model) {
@@ -20,7 +19,7 @@ public class GhostBusterController {
     }
 
     public void run() {
-        GBMainFrame gbMainFrame = new GBMainFrame();
+        GBMainFrame gbMainFrame = new GBMainFrame(this);
         gbMainFrame.setVisible(true);
         gbMainFrame.setLocationRelativeTo(null);
 
@@ -30,13 +29,12 @@ public class GhostBusterController {
         if (model == null) {
             model = new GhostBusterModel();
         }
-
-            model.setName(name);
+        model.setName(name);
 
     }
 
     public void selectOptionMainMenu() {
-        ButtonsFrame buttonsFrame = new ButtonsFrame();
+        ButtonsFrame buttonsFrame = new ButtonsFrame(this);
         buttonsFrame.setVisible(true);
         buttonsFrame.setLocationRelativeTo(null);
     }
@@ -46,7 +44,7 @@ public class GhostBusterController {
     }
 
     public void captureGhost() {
-    CaptureFrame captureFrame = new CaptureFrame();
+    CaptureFrame captureFrame = new CaptureFrame(this);
     captureFrame.setVisible(true);
     captureFrame.setLocationRelativeTo(null);
     }
@@ -65,13 +63,13 @@ public class GhostBusterController {
     }
 
     public void listGhosts() {
-        ListFrame listFrame = new ListFrame();
+        ListFrame listFrame = new ListFrame(this);
         listFrame.setVisible(true);
         listFrame.setLocationRelativeTo(null);
     }
 
     public void exitGame() {
-        ExitFrame exitFrame = new ExitFrame();
+        ExitFrame exitFrame = new ExitFrame(this);
         exitFrame.setVisible(true);
         exitFrame.setLocationRelativeTo(null);
     }

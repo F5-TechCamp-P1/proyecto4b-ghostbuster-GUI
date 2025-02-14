@@ -10,11 +10,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dev.cachaguercus.proyecto4.controllers.GhostBusterController;
-import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 
 public class GBMainFrame extends JFrame {
+    private GhostBusterController ghostBusterController;
 
-    public GBMainFrame() {
+    public GBMainFrame(GhostBusterController controller) {
+        this.ghostBusterController = controller;
+        initComponents();
+    }
+
+    private void initComponents() {
         JLabel title = new JLabel("GhostBusters Asturias");
         title.setFont(new Font("Showcard Gothic", Font.BOLD, 24));
         title.setAlignmentX(CENTER_ALIGNMENT);
@@ -46,17 +51,13 @@ public class GBMainFrame extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        playBtn.addActionListener(e -> {
-            openGame(nameField);
-        });
+        playBtn.addActionListener(e -> openGame(nameField));
     }
 
     public void openGame(JTextField nameField) {
         String name = nameField.getText();
-        GhostBusterModel model = new GhostBusterModel();
-        GhostBusterController controller = new GhostBusterController(model);
-        controller.saveGBModelName(name);
-        controller.selectOptionMainMenu();
+        ghostBusterController.saveGBModelName(name);
+        ghostBusterController.selectOptionMainMenu();
         dispose();
     }
 
