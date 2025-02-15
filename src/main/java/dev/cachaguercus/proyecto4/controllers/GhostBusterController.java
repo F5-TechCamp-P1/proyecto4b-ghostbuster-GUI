@@ -14,7 +14,6 @@ import dev.cachaguercus.proyecto4.views.ListFrame;
 
 public class GhostBusterController {
     private GhostBusterModel model;
-    private int lastGhostId = 0;
 
     public GhostBusterController(GhostBusterModel model) {
         this.model = model;
@@ -78,7 +77,8 @@ public class GhostBusterController {
     }
 
     public void addGhost(String name, enumGhostType ghostType, enumDangerLevel dangerLevel, String specialSkill) {
-        GhostModel ghost = new GhostModel(lastGhostId, specialSkill, ghostType, dangerLevel, specialSkill, null);
+        int lastGhostId = GhostBusterModel.getGhostTrap().size() + 1;
+        GhostModel ghost = new GhostModel(lastGhostId, name, ghostType, dangerLevel, specialSkill, LocalDate.now());
         GhostBusterModel.captureGhost(ghost);
 
     }
