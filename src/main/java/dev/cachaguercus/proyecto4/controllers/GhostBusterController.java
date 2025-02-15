@@ -73,7 +73,7 @@ public class GhostBusterController {
     }
 
     public void exitGame() {
-        ExitFrame exitFrame = new ExitFrame();
+        ExitFrame exitFrame = new ExitFrame(this);
         exitFrame.setVisible(true);
         exitFrame.setLocationRelativeTo(null);
     }

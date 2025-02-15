@@ -11,9 +11,9 @@ import javax.swing.JPanel;
 import dev.cachaguercus.proyecto4.controllers.GhostBusterController;
 
 public class ExitFrame extends JFrame {
-    GhostBusterController controller;
     
-    public ExitFrame() {
+    
+    public ExitFrame(GhostBusterController controller) {
 
         JLabel title = new JLabel("GhostBusters Asturias");
         title.setFont(new Font("Showcard Gothic", Font.BOLD, 24));
@@ -40,12 +40,12 @@ public class ExitFrame extends JFrame {
         setVisible(true); 
 
         playAgainBtn.addActionListener(e -> {
-            startAgain();
+            startAgain(controller);
             
         });
     }
 
-    public void startAgain() {
+    public void startAgain(GhostBusterController controller) {
         controller.playAgain();
         dispose();
     }    
