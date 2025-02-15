@@ -9,6 +9,7 @@ import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
 import dev.cachaguercus.proyecto4.views.ButtonsFrame;
 import dev.cachaguercus.proyecto4.views.CaptureFrame;
+import dev.cachaguercus.proyecto4.views.ExitFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
 import dev.cachaguercus.proyecto4.views.ListFrame;
 
@@ -90,6 +91,12 @@ public class GhostBusterController {
     public void deleteGhost(int ghostId) {
         GhostBusterModel.removeGhost(GhostBusterModel.getGhostTrap().get(ghostId));
 
+    }
+
+    public void playAgain(){
+        GBMainFrame gbMainFrame = new GBMainFrame(this); 
+        gbMainFrame.setLocationRelativeTo(null);
+        gbMainFrame.setVisible(true);
     }
 }
 
