@@ -29,7 +29,7 @@ public class ButtonsFrame extends JFrame {
                 SwingConstants.CENTER);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(600, 500);
         setTitle("Ghostbusters Asturias");
         setLayout(new FlowLayout());
         setVisible(true);
@@ -45,14 +45,18 @@ public class ButtonsFrame extends JFrame {
     }
 
     private void captureGhost() {
+        dispose();
         ghostBusterController.captureGhost();
     }
 
     private void listGhosts() {
+        dispose();
         ghostBusterController.listGhosts();
     }
 
     private void exitGame() {
+        dispose();
         ghostBusterController.exitGame();
     }
+
 }

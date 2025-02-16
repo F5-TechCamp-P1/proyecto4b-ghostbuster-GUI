@@ -89,12 +89,35 @@ public class GhostBusterController {
     }
 
     public void deleteGhost(int ghostId) {
-        GhostBusterModel.removeGhost(GhostBusterModel.getGhostTrap().get(ghostId));
+        try {
+            List<GhostModel> ghostList = GhostBusterModel.getGhostTrap();
+            if (ghostList == null || ghostList.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "La lista de fantasmas está vacía.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
+            GhostModel ghostToRemove = null;
+            for (GhostModel ghost : ghostList) {
+                if (ghost.getId() == ghostId) {
+                    ghostToRemove = ghost;
+                    break;
+                }
+            }
+
+            if (ghostToRemove != null) {
+                GhostBusterModel.removeGhost(ghostToRemove);
+                JOptionPane.showMessageDialog(null, "Fantasma eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Fantasma no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al eliminar el fantasma: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void playAgain(){
-        GBMainFrame gbMainFrame = new GBMainFrame(this); 
+        GBMainFrame gbMainFrame = new GBMainFrame(this);
         gbMainFrame.setLocationRelativeTo(null);
         gbMainFrame.setVisible(true);
     }

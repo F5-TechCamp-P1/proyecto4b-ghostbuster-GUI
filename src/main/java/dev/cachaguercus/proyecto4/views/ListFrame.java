@@ -16,6 +16,7 @@ public class ListFrame extends JFrame {
 
     private GhostBusterController controller;
     private DefaultTableModel tableModel;
+    private JTable table;
 
     public ListFrame(GhostBusterController controller) {
         this.controller = controller;
@@ -25,66 +26,80 @@ public class ListFrame extends JFrame {
         setSize(800, 600);
         setLayout(new BorderLayout());
 
+        tableModel = new DefaultTableModel(new Object[] { "ID", "Nombre", "Tipo", "Nivel de Peligro",
+                "Habilidad Especial", "Fecha de Captura", "Acción" }, 0);
+        table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
 
-        tableModel = new DefaultTableModel(new Object[]{"ID", "Nombre", "Tipo", "Nivel de Peligro", "Habilidad Especial", "Fecha de Captura", "Acción"}, 0);
+        JButton backButton = new JButton("Volver al Menú");
+        backButton.addActionListener(e -> {
+            dispose();
+            controller.selectOptionMainMenu();
+        });
 
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(backButton);
+
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        add(scrollPane, BorderLayout.CENTER);
 
         if (controller != null) {
             updateGhostList();
         }
 
-        JTable table = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(table);
+        setVisible(true);
+    }
 
+    private void updateGhostList() {
+        tableModel.setRowCount(0);
 
+        if (controller != null) {
+            List<GhostModel> ghosts = controller.getList();
+            if (ghosts != null) {
+                for (GhostModel ghost : ghosts) {
+                    if (ghost != null) {
+                        tableModel.addRow(new Object[] {
+                                ghost.getId(),
+                                ghost.getName(),
+                                ghost.getGhost_type().getGhostTypeDescription(),
+                                ghost.getDanger_level().getNumericLevel(),
+                                ghost.getSpecial_skill(),
+                                ghost.getCapture_date(),
+                                "Eliminar"
+                        });
+                    }
+                }
+            }
+        }
         Action deleteAction = new AbstractAction("Eliminar") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = table.getSelectedRow();
                 if (row >= 0) {
                     int ghostId = (int) tableModel.getValueAt(row, 0);
-                    int confirmation = JOptionPane.showConfirmDialog(ListFrame.this, "¿Seguro que desea eliminar este fantasma?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+                    int confirmation = JOptionPane.showConfirmDialog(
+                            ListFrame.this, "¿Seguro que desea eliminar este fantasma?", "Confirmar Eliminación",
+                            JOptionPane.YES_NO_OPTION);
                     if (confirmation == JOptionPane.YES_OPTION) {
                         controller.deleteGhost(ghostId);
                         updateGhostList();
+
+                        if (tableModel.getRowCount() == 0) {
+                            JOptionPane.showMessageDialog(ListFrame.this, "No hay fantasmas capturados.", "Lista Vacía",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            controller.selectOptionMainMenu();
+                        }
                     }
                 }
             }
         };
 
-        ButtonColumn buttonColumn = new ButtonColumn(table, deleteAction, 6);
-
-        add(scrollPane, BorderLayout.CENTER);
-        setVisible(true);
+        new ButtonColumn(table, deleteAction, 6);
     }
 
-
-
-    private void updateGhostList() {
-        tableModel.setRowCount(0);
-        if (controller != null) {
-            List<GhostModel> ghosts = controller.getList();
-            if (ghosts != null) {
-                for (GhostModel ghost : ghosts) {
-                    if (ghost != null) {
-                        tableModel.addRow(new Object[]{
-                                ghost.getId(),
-                                ghost.getName(),
-                                ghost.getGhost_type().getGhostTypeDescription(),
-                                ghost.getDanger_level().getNumericLevel(),
-                                ghost.getSpecial_skill(),
-                                ghost.getCapture_date()
-                        });
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    private class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, ActionListener, TableCellEditor {
-
+    private class ButtonColumn extends AbstractCellEditor
+            implements TableCellRenderer, ActionListener, TableCellEditor {
         JTable table;
         JButton renderButton;
         JButton editButton;
@@ -92,36 +107,25 @@ public class ListFrame extends JFrame {
 
         public ButtonColumn(JTable table, Action action, int column) {
             this.table = table;
-            renderButton = new JButton();
-            editButton = new JButton();
+            renderButton = new JButton("Eliminar");
+            editButton = new JButton("Eliminar");
             editButton.setAction(action);
+            editButton.addActionListener(this);
             editButton.setOpaque(true);
+
             this.table.getColumnModel().getColumn(column).setCellRenderer(this);
             this.table.getColumnModel().getColumn(column).setCellEditor(this);
         }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (hasFocus) {
-                editButton.setForeground(table.getForeground());
-                editButton.setBackground(UIManager.getColor("Button.background"));
-            }
-            if (isSelected) {
-                editButton.setForeground(table.getSelectionForeground());
-                editButton.setBackground(table.getSelectionBackground());
-            } else {
-                editButton.setForeground(table.getForeground());
-                editButton.setBackground(UIManager.getColor("Button.background"));
-            }
-
-            editButton.setText("Eliminar");
-            return editButton;
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            return renderButton;
         }
 
         @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            text = (value == null) ? "" : value.toString();
-            editButton.setText(text);
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+                int column) {
             return editButton;
         }
 
@@ -134,6 +138,19 @@ public class ListFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             fireEditingStopped();
+
+            if (row >= 0) {
+                int ghostId = (int) table.getModel().getValueAt(row, 0);
+                int confirmation = JOptionPane.showConfirmDialog(table, "¿Seguro que desea eliminar este fantasma?",
+                        "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+
+                if (confirmation == JOptionPane.YES_OPTION) {
+                    controller.deleteGhost(ghostId);
+                    ((DefaultTableModel) table.getModel()).removeRow(row);
+
+                }
+            }
         }
+
     }
 }

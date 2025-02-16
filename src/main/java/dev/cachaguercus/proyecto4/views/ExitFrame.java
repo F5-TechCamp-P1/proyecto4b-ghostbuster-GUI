@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 import dev.cachaguercus.proyecto4.controllers.GhostBusterController;
 
 public class ExitFrame extends JFrame {
-    
-    
+
+
     public ExitFrame(GhostBusterController controller) {
 
         JLabel title = new JLabel("GhostBusters Asturias");
@@ -30,24 +30,24 @@ public class ExitFrame extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(title);
         panel.add(goodbyeMessage);
-        panel.add(playAgainBtn);    
+        panel.add(playAgainBtn);
         setContentPane(panel);
 
-        
-        setSize(800, 400); 
+
+        setSize(800, 400);
         setLocationRelativeTo(null);
         setTitle("GhostBusters Asturias");
-        setVisible(true); 
+        setVisible(true);
 
         playAgainBtn.addActionListener(e -> {
             startAgain(controller);
-            
+            dispose();
         });
     }
 
     public void startAgain(GhostBusterController controller) {
         controller.playAgain();
         dispose();
-    }    
+    }
 
 }
