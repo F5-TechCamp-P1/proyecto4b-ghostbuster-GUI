@@ -15,6 +15,7 @@ import dev.cachaguercus.proyecto4.views.ButtonsFrame;
 import dev.cachaguercus.proyecto4.views.CaptureFrame;
 import dev.cachaguercus.proyecto4.views.ExitFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
+import dev.cachaguercus.proyecto4.views.ListFrame;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -108,16 +109,12 @@ public class GhostBusterControllerTest {
     }
 
      @Test
-    @DisplayName("Should display the list of captured ghosts")
+    @DisplayName("Should open ListFrame")
     void testListGhosts() {
-        GhostBusterModel model = Mockito.mock(GhostBusterModel.class);
-        GhostBusterView view = Mockito.mock(GhostBusterView.class);
-        GhostBusterController controller = new GhostBusterController(model, view);
-        GhostModel ghost = new GhostModel(0, "Casper", enumGhostType.CLASE_I, enumDangerLevel.BAJO,
-                "aparecerse y sonreir", LocalDate.now());
-        GhostBusterModel.captureGhost(ghost);
-        controller.listGhosts();
-        verify(view, times(1)).displayGhostTrap();
+        GuiActionRunner.execute(() -> controller.listGhosts());
+        window = findFrame(ListFrame.class).using(robot);
+        assertThat(window).isNotNull();
+        assertThat(window.target().isShowing()).isTrue();
     }
 
     @Test
