@@ -84,17 +84,12 @@ public class GhostBusterControllerTest {
     }
 
    @Test
-    @DisplayName("When captureGhost is called, should call model.captureGhost with the correct parameters")
+    @DisplayName("Should open CaptureFrame")
     void testCaptureGhost() {
-        GhostBusterModel model = new GhostBusterModel();
-        GhostBusterView view = Mockito.mock(GhostBusterView.class);
-        InputStream in = new ByteArrayInputStream("Casper\n1\n1\naparecerse y sonreir\n".getBytes());
-        System.setIn(in);
-        GhostBusterController controller = new GhostBusterController(model, view);
-
-        controller.captureGhost();
-
-        verify(view, times(1)).displaySuccessfulCapture(any(String.class), any(LocalDate.class));
+        GuiActionRunner.execute(() -> controller.captureGhost());
+        window = findFrame(CaptureFrame.class).using(robot);
+        assertThat(window).isNotNull();
+        assertThat(window.target().isShowing()).isTrue();
     }
 
     @Test
