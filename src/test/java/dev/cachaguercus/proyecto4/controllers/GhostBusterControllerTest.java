@@ -1,5 +1,6 @@
 package dev.cachaguercus.proyecto4.controllers;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,33 +8,42 @@ import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
 import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
-import dev.cachaguercus.proyecto4.views.GhostBusterView;
+import dev.cachaguercus.proyecto4.views.CaptureFrame;
+import dev.cachaguercus.proyecto4.views.ExitFrame;
+import dev.cachaguercus.proyecto4.views.GBMainFrame;
+import static org.assertj.swing.finder.WindowFinder.findFrame;
+import org.assertj.swing.core.BasicRobot;
+import org.assertj.swing.core.Robot;
+import org.assertj.swing.edt.GuiActionRunner;
+import org.assertj.swing.fixture.FrameFixture;
+import org.junit.jupiter.api.AfterEach;
 
-import org.mockito.Mockito;
-
-import static org.mockito.Mockito.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.not;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.time.LocalDate;
 
 public class GhostBusterControllerTest {
 
-    @Test
-    @DisplayName("Should ask GhostBusterView to displayWelcomeMessage")
-    void testRun() {
-        GhostBusterView view = Mockito.mock(GhostBusterView.class);
-        GhostBusterModel model = new GhostBusterModel();
-        String input = "X\n4\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        GhostBusterController controller = new GhostBusterController(model, view);
+    private GhostBusterController controller;
+    private GhostBusterModel model;
+    private Robot robot;
+    private FrameFixture window;
 
+    @BeforeEach
+    public void setUp() {
+        model = new GhostBusterModel();
+        controller = new GhostBusterController(model);
+        robot = BasicRobot.robotWithNewAwtHierarchy();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        if (window != null) {
+            window.cleanUp();
+        }
+    }    
+
+    @Test
+    @DisplayName("Should open GBMainFrame")
+    void testRun() {
         controller.run();
-        verify(view, times(1)).displayWelcomeMessage();
     }
 
     @Test
