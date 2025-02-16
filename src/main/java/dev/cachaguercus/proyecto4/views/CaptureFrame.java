@@ -13,7 +13,7 @@ import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
 
 public class CaptureFrame extends JFrame {
-    public CaptureFrame(GhostBusterController controller) { 
+    public CaptureFrame(GhostBusterController controller) {
         setTitle("Capturar Fantasma");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
@@ -33,7 +33,9 @@ public class CaptureFrame extends JFrame {
 
             controller.addGhost(name, ghostType, dangerLevel, specialSkill);
 
-            JOptionPane.showMessageDialog(this, "Fantasma capturado exitosamente!", "Captura", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Fantasma capturado exitosamente!", "Captura",
+                    JOptionPane.INFORMATION_MESSAGE);
+            controller.selectOptionMainMenu();
             dispose();
         });
 
