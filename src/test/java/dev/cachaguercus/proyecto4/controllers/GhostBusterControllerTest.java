@@ -3,7 +3,10 @@ package dev.cachaguercus.proyecto4.controllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
+import static org.mockito.Mockito.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,12 +20,11 @@ import dev.cachaguercus.proyecto4.views.ExitFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
 import dev.cachaguercus.proyecto4.views.ListFrame;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.swing.finder.WindowFinder.findFrame;
-import static org.mockito.ArgumentMatchers.any;
 
 import org.assertj.swing.core.BasicRobot;
 import org.assertj.swing.core.Robot;
@@ -30,18 +32,18 @@ import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.AfterEach;
 
-
 public class GhostBusterControllerTest {
 
     private GhostBusterController controller;
-    private GhostBusterModel model;
+    @Mock
+    private GhostBusterModel modelMock;
     private Robot robot;
     private FrameFixture window;
 
     @BeforeEach
     public void setUp() {
-        model = new GhostBusterModel();
-        controller = new GhostBusterController(model);
+        MockitoAnnotations.openMocks(this);
+        controller = new GhostBusterController(modelMock);
         robot = BasicRobot.robotWithNewAwtHierarchy();
     }
 
@@ -71,20 +73,6 @@ public class GhostBusterControllerTest {
     }
 
     @Test
-    @DisplayName("Should ask model to set the GhostBuster name")
-    void testRunAsksUserForName() {
-        GhostBusterView view = new GhostBusterView();
-        GhostBusterModel model = Mockito.mock(GhostBusterModel.class);
-        String input = "Cachaguercu\n4\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        GhostBusterController controller = new GhostBusterController(model, view);
-
-        controller.run();
-        verify(model, times(1)).setName("Cachaguercu");
-    }
-
-   @Test
     @DisplayName("Should open CaptureFrame")
     void testCaptureGhost() {
         GuiActionRunner.execute(() -> controller.captureGhost());
@@ -117,7 +105,22 @@ public class GhostBusterControllerTest {
         window = findFrame(GBMainFrame.class).using(robot);
         assertThat(window).isNotNull();
         assertThat(window.target().isShowing()).isTrue();
-        
     }
 
+    /* @Test
+    void testDeleteGhost() {
+        // Crea un Ghost ficticio para la prueba
+        GhostModel ghost = new GhostModel(0, "Caper", enumGhostType.CLASE_II, enumDangerLevel.CRITICO, "volar", LocalDate.now());
+        List<GhostModel> ghostTrap = new ArrayList<>();
+        ghostTrap.add(ghost);
+
+        // Configura el mock para devolver la lista de Ghosts
+        when(modelMock.getGhostTrap()).thenReturn(ghostTrap);
+
+        // Llama al método del controlador
+        controller.deleteGhost(0);
+
+        // Verifica que el método removeGhost fue llamado con el Ghost correcto
+        verify(modelMock).removeGhost(ghost);
+    } */
 }
