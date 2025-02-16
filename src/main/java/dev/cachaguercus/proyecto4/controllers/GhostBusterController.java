@@ -89,12 +89,13 @@ public class GhostBusterController {
     }
 
     public void deleteGhost(int ghostId) {
-        GhostBusterModel.removeGhost(GhostBusterModel.getGhostTrap().get(ghostId));
+        GhostModel ghostToRemove = GhostBusterModel.getGhostById(ghostId);
+        GhostBusterModel.removeGhost(ghostToRemove);
 
     }
 
     public void playAgain(){
-        GBMainFrame gbMainFrame = new GBMainFrame(this); 
+        GBMainFrame gbMainFrame = new GBMainFrame(this);
         gbMainFrame.setLocationRelativeTo(null);
         gbMainFrame.setVisible(true);
     }

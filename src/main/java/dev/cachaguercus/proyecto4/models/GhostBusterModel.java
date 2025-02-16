@@ -15,6 +15,15 @@ public class GhostBusterModel {
         return ghostTrap;
     }
 
+    public static GhostModel getGhostById(int id) {
+        for (GhostModel ghost : ghostTrap) {
+            if (ghost.getId() == id) {
+                return ghost;
+            }
+        }
+        return null;
+    }
+
     public static void captureGhost(GhostModel ghost) {
         ghostTrap.add(ghost);
     }
