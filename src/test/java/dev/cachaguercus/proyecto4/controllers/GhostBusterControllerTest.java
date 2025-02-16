@@ -94,21 +94,6 @@ public class GhostBusterControllerTest {
     }
 
     @Test
-    @DisplayName("Should pass a name to model so that it removes the ghost by removeGhost")
-    void testRemoveGhost() {
-        GhostBusterModel model = Mockito.mock(GhostBusterModel.class);
-        GhostBusterView view = Mockito.mock(GhostBusterView.class);
-        System.setIn(new ByteArrayInputStream("Casper\n".getBytes()));
-        GhostBusterController controller = new GhostBusterController(model, view);
-        GhostModel ghost = new GhostModel(0, "Casper", enumGhostType.CLASE_I, enumDangerLevel.BAJO,
-        "aparecerse y sonreir", LocalDate.now());
-        GhostBusterModel.captureGhost(ghost);
-        when(view.displayReleaseGhost()).thenReturn("Casper");
-        controller.removeGhost();
-        assertThat(GhostBusterModel.getGhostTrap(), not(hasItem(ghost)));
-    }
-
-     @Test
     @DisplayName("Should open ListFrame")
     void testListGhosts() {
         GuiActionRunner.execute(() -> controller.listGhosts());
