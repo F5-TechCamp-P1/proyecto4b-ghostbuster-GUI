@@ -3,6 +3,9 @@ package dev.cachaguercus.proyecto4.controllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
@@ -11,7 +14,17 @@ import dev.cachaguercus.proyecto4.models.GhostModel;
 import dev.cachaguercus.proyecto4.views.CaptureFrame;
 import dev.cachaguercus.proyecto4.views.ExitFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.time.LocalDate;
+
 import static org.assertj.swing.finder.WindowFinder.findFrame;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.assertj.swing.core.BasicRobot;
 import org.assertj.swing.core.Robot;
 import org.assertj.swing.edt.GuiActionRunner;
@@ -43,7 +56,11 @@ public class GhostBusterControllerTest {
     @Test
     @DisplayName("Should open GBMainFrame")
     void testRun() {
-        controller.run();
+        GuiActionRunner.execute(() -> controller.run());
+
+        window = findFrame(GBMainFrame.class).using(robot);
+        assertThat(window).isNotNull();
+        assertThat(window.target().isShowing()).isTrue();
     }
 
     @Test
