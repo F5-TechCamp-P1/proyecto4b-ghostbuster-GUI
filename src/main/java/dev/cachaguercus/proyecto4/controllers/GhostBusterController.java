@@ -52,20 +52,6 @@ public class GhostBusterController {
     captureFrame.setLocationRelativeTo(null);
     }
 
-    public void removeGhost() {
-        String name = JOptionPane.showInputDialog(null, "Ingrese el nombre del fantasma a liberar:");
-        if (name != null) {
-            for (GhostModel ghost : GhostBusterModel.getGhostTrap()) {
-                if (ghost.getName().equalsIgnoreCase(name)) {
-                    GhostBusterModel.removeGhost(ghost);
-                    JOptionPane.showMessageDialog(null, "Fantasma liberado!", "Liberación", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-            }
-            JOptionPane.showMessageDialog(null, "Fantasma no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     public void listGhosts() {
         ListFrame listFrame = new ListFrame(this);
         listFrame.setVisible(true);
@@ -90,7 +76,6 @@ public class GhostBusterController {
 
     public void deleteGhost(int ghostId) {
         GhostBusterModel.removeGhost(GhostBusterModel.getGhostTrap().get(ghostId));
-
     }
 
     public void playAgain(){

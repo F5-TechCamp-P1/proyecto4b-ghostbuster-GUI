@@ -126,4 +126,13 @@ public class GhostBusterControllerTest {
         assertThat(window.target().isShowing()).isTrue();
     }
 
+    @Test
+    void testPlayAgain() {
+        GuiActionRunner.execute(() -> controller.playAgain());
+        window = findFrame(GBMainFrame.class).using(robot);
+        assertThat(window).isNotNull();
+        assertThat(window.target().isShowing()).isTrue();
+        
+    }
+
 }
