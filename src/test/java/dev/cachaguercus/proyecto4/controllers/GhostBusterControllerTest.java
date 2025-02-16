@@ -22,9 +22,6 @@ import java.time.LocalDate;
 
 import static org.assertj.swing.finder.WindowFinder.findFrame;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.assertj.swing.core.BasicRobot;
 import org.assertj.swing.core.Robot;
@@ -129,12 +126,12 @@ public class GhostBusterControllerTest {
     }
 
     @Test
-    @DisplayName("Should display exit message")
+    @DisplayName("Should open ExitFrame")
     void testExitGame() {
-        GhostBusterView view = Mockito.mock(GhostBusterView.class);
-        GhostBusterController controller = new GhostBusterController(null, view);
-        controller.exitGame();
-        verify(view, times(1)).displayExitMessage();
+        GuiActionRunner.execute(() -> controller.exitGame());
+        window = findFrame(ExitFrame.class).using(robot);
+        assertThat(window).isNotNull();
+        assertThat(window.target().isShowing()).isTrue();
     }
 
 }
