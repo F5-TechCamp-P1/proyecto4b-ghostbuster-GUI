@@ -11,6 +11,7 @@ import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
 import dev.cachaguercus.proyecto4.enums.enumGhostType;
 import dev.cachaguercus.proyecto4.models.GhostBusterModel;
 import dev.cachaguercus.proyecto4.models.GhostModel;
+import dev.cachaguercus.proyecto4.views.ButtonsFrame;
 import dev.cachaguercus.proyecto4.views.CaptureFrame;
 import dev.cachaguercus.proyecto4.views.ExitFrame;
 import dev.cachaguercus.proyecto4.views.GBMainFrame;
@@ -57,24 +58,18 @@ public class GhostBusterControllerTest {
     @DisplayName("Should open GBMainFrame")
     void testRun() {
         GuiActionRunner.execute(() -> controller.run());
-
         window = findFrame(GBMainFrame.class).using(robot);
         assertThat(window).isNotNull();
         assertThat(window.target().isShowing()).isTrue();
     }
 
     @Test
-    @DisplayName("Should ask GhostBusterView to displayInitialMenu")
+    @DisplayName("Should open ButtonsFrame")
     void testSelectOptionMainMenu() {
-        GhostBusterView view = Mockito.mock(GhostBusterView.class);
-        GhostBusterModel model = new GhostBusterModel();
-        String input = "4\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        GhostBusterController controller = new GhostBusterController(model, view);
-
-        controller.selectOptionMainMenu();
-        verify(view, times(1)).displayInitialMenu();
+        GuiActionRunner.execute(() -> controller.selectOptionMainMenu());
+        window = findFrame(ButtonsFrame.class).using(robot);
+        assertThat(window).isNotNull();
+        assertThat(window.target().isShowing()).isTrue();
     }
 
     @Test
