@@ -7,11 +7,21 @@ public class GhostBusterModel {
     private static List<GhostModel> ghostTrap = new ArrayList<GhostModel>();
     private String name;
 
+
     public GhostBusterModel() {
     }
 
     public static List<GhostModel> getGhostTrap() {
         return ghostTrap;
+    }
+
+    public static GhostModel getGhostById(int id) {
+        for (GhostModel ghost : ghostTrap) {
+            if (ghost.getId() == id) {
+                return ghost;
+            }
+        }
+        return null;
     }
 
     public static void captureGhost(GhostModel ghost) {
