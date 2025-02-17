@@ -1,6 +1,7 @@
 package dev.cachaguercus.proyecto4.controllers;
 
 import java.util.List;
+import java.awt.Robot;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import dev.cachaguercus.proyecto4.enums.enumDangerLevel;
@@ -15,6 +16,7 @@ import dev.cachaguercus.proyecto4.views.ListFrame;
 
 public class GhostBusterController {
     private GhostBusterModel model;
+    private Robot robot;
 
     public GhostBusterController(GhostBusterModel model) {
         this.model = model;
@@ -46,9 +48,10 @@ public class GhostBusterController {
     }
 
     public void captureGhost() {
-    CaptureFrame captureFrame = new CaptureFrame(this);
-    captureFrame.setVisible(true);
-    captureFrame.setLocationRelativeTo(null);
+        CaptureFrame captureFrame = new CaptureFrame(this);
+        captureFrame.setVisible(true);
+        captureFrame.setLocationRelativeTo(null);
+        robot.waitForIdle();
     }
 
     public void removeGhost() {
