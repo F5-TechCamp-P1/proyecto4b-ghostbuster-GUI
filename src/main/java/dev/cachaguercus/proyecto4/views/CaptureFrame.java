@@ -16,7 +16,7 @@ public class CaptureFrame extends JFrame {
     public CaptureFrame(GhostBusterController controller) { 
         setTitle("Capturar Fantasma");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(800, 400);
         setLayout(new GridLayout(6, 2));
 
         JTextField nameField = new JTextField();
