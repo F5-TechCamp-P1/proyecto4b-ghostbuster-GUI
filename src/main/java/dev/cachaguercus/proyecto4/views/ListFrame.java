@@ -22,7 +22,7 @@ public class ListFrame extends JFrame {
 
         setTitle("Lista de Fantasmas Capturados");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(800, 600);
+        setSize(800, 400);
         setLayout(new BorderLayout());
 
 
