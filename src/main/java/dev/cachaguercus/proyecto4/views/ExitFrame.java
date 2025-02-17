@@ -34,7 +34,7 @@ public class ExitFrame extends JFrame {
         setContentPane(panel);
 
         
-        setSize(800, 400); 
+        setSize(800, 400);
         setLocationRelativeTo(null);
         setTitle("GhostBusters Asturias");
         setVisible(true); 
