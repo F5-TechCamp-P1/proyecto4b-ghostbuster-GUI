@@ -70,14 +70,14 @@ public class ListFrame extends JFrame {
         adjustColumnWidths();
     }
 
-    private void adjustColumnWidths() {
-        table.getColumnModel().getColumn(0).setPreferredWidth(50); // ID
-        table.getColumnModel().getColumn(1).setPreferredWidth(100); // Nombre
-        table.getColumnModel().getColumn(2).setPreferredWidth(200); // Tipo
-        table.getColumnModel().getColumn(3).setPreferredWidth(75); // Nivel de Peligro
-        table.getColumnModel().getColumn(4).setPreferredWidth(300); // Habilidad Especial
-        table.getColumnModel().getColumn(5).setPreferredWidth(100); // Fecha de Captura
-        table.getColumnModel().getColumn(6).setPreferredWidth(100); // Acción
+    void adjustColumnWidths() {
+        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        table.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table.getColumnModel().getColumn(3).setPreferredWidth(75);
+        table.getColumnModel().getColumn(4).setPreferredWidth(300);
+        table.getColumnModel().getColumn(5).setPreferredWidth(100);
+        table.getColumnModel().getColumn(6).setPreferredWidth(100);
     }
 
     private void setupDeleteButtonColumn() {
